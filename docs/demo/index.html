@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Demo Crypto Store
+    </title>
+    <style>
+      h1 {
+        font-family: 'Ubuntu', sans-serif !important;
+        text-transform: uppercase;
+      }
+
+      textarea {
+        display: block;
+        width: 600px;
+        height: 200px;
+        margin: 5px 0;
+        padding: 5px;
+      }
+
+      p {
+        width: 600px;
+      }
+
+      .hide {
+        display: none;
+      }
+      .show {
+        display: block;
+      }
+
+      .note {
+        font-weight: bold;
+      }
+    </style>
+    <link
+      href="http://fonts.googleapis.com/css?family=Ubuntu:400"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <h1>Demo Crypto Store</h1>
+    <p>
+      This example shows a simple storage that uses idb as the backend and the WebCrypto API for
+      integrity and authenticity checking, as well as password-based key derivation and AES
+      encryption using Web Crypto Tools.
+    </p>
+    <p class="note">
+      (Please use your DevTools' storage inspector to look at storage values.)
+    </p>
+
+    <form id="login">
+      <label>
+        User:
+        <input id="user" type="text" autofocus />
+      </label>
+
+      <label>
+        Password:
+        <input id="pass" type="password" />
+      </label>
+      <button id="login" type="submit">login</button>
+    </form>
+
+    <br />
+
+    <section id="notes" class="hide">
+      <input id="load" type="button" value="Load from Storage" />
+      <input id="save" type="button" value="Save to Storage" />
+      <input id="paste" type="button" value="Paste Example Notes" />
+      <input id="clear" type="button" value="Clear Storage" />
+      <input id="logout" type="button" value="Logout" />
+
+      <textarea id="text"></textarea>
+    </section>
+
+    <div id="status"></div>
+
+    <script src="demo.js"></script>
+  </body>
+</html>

@@ -6,6 +6,10 @@ This crypto store not only encrypt/decrypt the data but also checks for integrit
 
 This project depends on the browser implementation of [Crypto API](https://caniuse.com/#feat=cryptography) and [TextEncoder API](https://caniuse.com/#feat=textencoder), which are both current implemented on all green browsers. If you do need to support any older browser, you should look for available polyfills.
 
+## Demo
+
+You can play with a [full feature demo](https://willgm.github.io/web-crypto-store/demo/index.html) on our Github Pages.
+
 ## Usage
 
 ### Install the project
