@@ -1,6 +1,6 @@
 {
   "name": "@webcrypto/store",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": false,
   "description": "A set of tools to facilitate and give good defaults for use of the native Web Crypto API.",
   "publishConfig": {
