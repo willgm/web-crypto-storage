@@ -1,5 +1,5 @@
 {
-  "name": "@webcrypto/indexdb",
+  "name": "@webcrypto/store",
   "version": "0.0.0",
   "private": false,
   "description": "A set of tools to facilitate and give good defaults for use of the native Web Crypto API.",
@@ -8,6 +8,7 @@
   },
   "keywords": [
     "crypto",
+    "store",
     "indexdb",
     "cryptography",
     "keyval",
@@ -15,26 +16,28 @@
     "key val",
     "idb"
   ],
-  "main": "dist/web-crypto-indexdb.cjs.js",
-  "browser": "dist/web-crypto-indexdb.umd.js",
-  "module": "dist/web-crypto-indexdb.module.js",
-  "es2015": "dist/web-crypto-indexdb.es2015.js",
-  "typings": "dist/web-crypto-indexdb.d.ts",
+  "main": "dist/web-crypto-store.cjs.js",
+  "browser": "dist/web-crypto-store.umd.js",
+  "module": "dist/web-crypto-store.module.js",
+  "es2015": "dist/web-crypto-store.es2015.js",
+  "typings": "dist/web-crypto-store.d.ts",
   "files": [
     "dist"
   ],
   "author": "William Grasel <d.rufos@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/willgm/web-crypto-indexdb.git"
+    "url": "https://github.com/willgm/web-crypto-store.git"
   },
-  "homepage": "https://willgm.github.io/web-crypto-indexdb/",
+  "homepage": "https://willgm.github.io/web-crypto-store/",
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "rollup -c rollup.config.ts -w",
+    "start": "run-p start:*",
+    "start:demo": "budo ./demo/demo.js --dir ./demo/ --live --ssl",
+    "start:build": "rollup -c rollup.config.ts -w",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "shx rm -rf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
@@ -107,7 +110,9 @@
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@types/jasmine": "^3.5.11",
+    "@types/lodash.camelcase": "^4.3.6",
     "@types/node": "^12.12.50",
+    "@types/rollup-plugin-json": "^3.0.2",
     "browserify": "^16.5.1",
     "budo": "^11.6.4",
     "colors": "^1.3.2",
