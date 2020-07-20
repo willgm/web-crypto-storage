@@ -174,6 +174,21 @@ export class CryptoStorage {
   }
 
   /**
+   * Delete individual data that match the given key.
+   *
+   * @param key The given key to find the data.
+   * @returns Promise to know when the process was complete.
+   */
+  async delete(key: InputData): Promise<void> {
+    const [[store, storeName], hashKey, hashNonce] = await all([
+      this.internalConfig,
+      generateHash(key),
+      generateHash(key + '-nonce'),
+    ]);
+    await all([store.delete(storeName, hashKey), store.delete(storeName, hashNonce)]);
+  }
+
+  /**
    * Fully delete not only all the key and data stored at the current store and database,
    * but also deleting the whole store and database the structure.
    *

@@ -2741,6 +2741,9 @@ img {
 					<a href="cryptostorage.html#close" class="tsd-kind-icon">close</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
+					<a href="cryptostorage.html#delete" class="tsd-kind-icon">delete</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-class">
 					<a href="cryptostorage.html#deletedb" class="tsd-kind-icon">deleteDB</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -2798,6 +2801,7 @@ img {
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="cryptostorage.html#clear" class="tsd-kind-icon">clear</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="cryptostorage.html#close" class="tsd-kind-icon">close</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="cryptostorage.html#delete" class="tsd-kind-icon">delete</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="cryptostorage.html#deletedb" class="tsd-kind-icon">deleteDB</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="cryptostorage.html#get" class="tsd-kind-icon">get</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-class"><a href="cryptostorage.html#set" class="tsd-kind-icon">set</a></li>
@@ -2819,7 +2823,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L66">web-crypto-storage.ts:66</a></li>
+								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L66">web-crypto-storage.ts:66</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2838,7 +2842,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L71">web-crypto-storage.ts:71</a></li>
+								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L71">web-crypto-storage.ts:71</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2892,7 +2896,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Authenticity<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;Integrity/Authenticity check failed!&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L56">web-crypto-storage.ts:56</a></li>
+						<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L56">web-crypto-storage.ts:56</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2907,7 +2911,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Crypto<wbr>Key<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;CryptoStorage needs a base key to work properly&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L61">web-crypto-storage.ts:61</a></li>
+						<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L61">web-crypto-storage.ts:61</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2929,7 +2933,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L160">web-crypto-storage.ts:160</a></li>
+								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L160">web-crypto-storage.ts:160</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2952,7 +2956,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L171">web-crypto-storage.ts:171</a></li>
+								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L171">web-crypto-storage.ts:171</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2960,6 +2964,38 @@ img {
 								<p>Completely close the database connection.</p>
 							</div>
 						</div>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						<p>Promise to know when the process was complete.</p>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="delete" class="tsd-anchor"></a>
+				<h3>delete</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><a href="../globals.html#inputdata" class="tsd-signature-type">InputData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L182">web-crypto-storage.ts:182</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Delete individual data that match the given key.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>key: <a href="../globals.html#inputdata" class="tsd-signature-type">InputData</a></h5>
+								<div class="tsd-comment tsd-typography">
+									<p>The given key to find the data.</p>
+								</div>
+							</li>
+						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						<p>Promise to know when the process was complete.</p>
 					</li>
@@ -2975,7 +3011,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L182">web-crypto-storage.ts:182</a></li>
+								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L197">web-crypto-storage.ts:197</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -2999,7 +3035,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L113">web-crypto-storage.ts:113</a></li>
+								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L113">web-crypto-storage.ts:113</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -3031,7 +3067,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/04fdf87/src/web-crypto-storage.ts#L143">web-crypto-storage.ts:143</a></li>
+								<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L143">web-crypto-storage.ts:143</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
