@@ -217,25 +217,24 @@ const init = async ({
   encryptIterations,
 }: CryptoStorageConfig): Promise<InternalConfig> => {
   if (!baseKey) throw new Error(CryptoStorage.CryptoKeyError);
-  return all([
+  const [dbHashName, storeHashName, cryptoBaseKey] = await all([
     generateHash(dbName),
     generateHash(storeName),
     baseKey instanceof CryptoKey ? baseKey : generateBaseCryptoKey(baseKey),
-  ]).then(([dbHashName, storeHashName, cryptoBaseKey]) => {
-    const decodedStorageName = decode(storeHashName);
-    const store = openDB(decode(dbHashName), 1, {
-      upgrade(db) {
-        db.createObjectStore(decodedStorageName);
-      },
-    });
-    return all([
-      store,
-      decodedStorageName,
-      cryptoBaseKey,
-      verifySalt(store, decodedStorageName, salt),
-      encryptIterations,
-    ]);
+  ]);
+  const decodedStorageName = decode(storeHashName);
+  const store = openDB(decode(dbHashName), 1, {
+    upgrade(db) {
+      db.createObjectStore(decodedStorageName);
+    },
   });
+  return all([
+    store,
+    decodedStorageName,
+    cryptoBaseKey,
+    verifySalt(store, decodedStorageName, salt),
+    encryptIterations,
+  ]);
 };
 
 /**
