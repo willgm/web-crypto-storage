@@ -2736,16 +2736,16 @@ img {
 <div class="container container-main">
 	<div class="content-wrap">
 		<div class="tsd-panel tsd-typography">
-			<a href="#web-crypto-store" id="web-crypto-store" style="color: inherit; text-decoration: none;">
-				<h1>Web Crypto Store</h1>
+			<a href="#web-crypto-storage" id="web-crypto-storage" style="color: inherit; text-decoration: none;">
+				<h1>Web Crypto Storage</h1>
 			</a>
-			<p>This is a tiny promise-based crypto keyval store using IndexDB and the native <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API">Web Crypto API</a>, having just two small dependencies: <a href="https://github.com/jakearchibald/idb">IDB</a> for a better devxp using IndexDB and <a href="https://github.com/willgm/web-crypto-tools">Web Crypto Tools</a> for a better devxp using the Web Crypto API.</p>
-			<p>This crypto store not only encrypt/decrypt the data but also checks for integrity, verifying if the stored data were manually updated. It uses the default crypto algorithms on <a href="https://github.com/willgm/web-crypto-tools">Web Crypto Tools</a>, which are <code>PBKDF2</code> for hashing and key derivation and <code>AES-GCM</code> for encryption, with the option to customize the used salt and encrypt iterations. The base crypto key is safely used in memory and never stored locally, if at the next session the base crypto key is lost, the data cannot be decrypted back to the original value.</p>
+			<p>This is a tiny promise-based crypto keyval storage using IndexDB and the native <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API">Web Crypto API</a>, having just two small dependencies: <a href="https://github.com/jakearchibald/idb">IDB</a> for a better devxp using IndexDB and <a href="https://github.com/willgm/web-crypto-tools">Web Crypto Tools</a> for a better devxp using the Web Crypto API.</p>
+			<p>This crypto storage not only encrypt/decrypt the data but also checks for integrity, verifying if the stored data were manually updated. It uses the default crypto algorithms on <a href="https://github.com/willgm/web-crypto-tools">Web Crypto Tools</a>, which are <code>PBKDF2</code> for hashing and key derivation and <code>AES-GCM</code> for encryption, with the option to customize the used salt and encrypt iterations. The base crypto key is safely used in memory and never stored locally, if at the next session the base crypto key is lost, the data cannot be decrypted back to the original value.</p>
 			<p>This project depends on the browser implementation of <a href="https://caniuse.com/#feat=cryptography">Crypto API</a> and <a href="https://caniuse.com/#feat=textencoder">TextEncoder API</a>, which are both current implemented on all green browsers. If you do need to support any older browser, you should look for available polyfills.</p>
 			<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
 				<h2>Demo</h2>
 			</a>
-			<p>You can play with a <a href="https://willgm.github.io/web-crypto-store/demo/index.html">full feature demo</a> on our Github Pages.</p>
+			<p>You can play with a <a href="https://willgm.github.io/web-crypto-storage/demo/index.html">full feature demo</a> on our Github Pages.</p>
 			<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 				<h2>Usage</h2>
 			</a>
@@ -2756,26 +2756,26 @@ img {
 			<a href="#store-your-crypto-data" id="store-your-crypto-data" style="color: inherit; text-decoration: none;">
 				<h3>Store your crypto data</h3>
 			</a>
-			<pre><code class="language-ts"><span class="hljs-comment">// create a new instance of the crypto store</span>
+			<pre><code class="language-ts"><span class="hljs-comment">// create a new instance of the crypto storage</span>
 <span class="hljs-keyword">const</span> cryptoStore = <span class="hljs-keyword">new</span> CryptoStorage(<span class="hljs-string">&#x27;my raw key&#x27;</span>);
 
 <span class="hljs-comment">// secure store your data locally fully encrypted</span>
 <span class="hljs-keyword">const</span> originalValue = <span class="hljs-string">&#x27;any data value&#x27;</span>;
-<span class="hljs-keyword">await</span> cryptoStore.save(<span class="hljs-string">&#x27;my key&#x27;</span>, originalValue);
+<span class="hljs-keyword">await</span> cryptoStore.set(<span class="hljs-string">&#x27;my key&#x27;</span>, originalValue);
 
 <span class="hljs-comment">// retrieve your original data decrypted again</span>
-<span class="hljs-keyword">const</span> decryptedValue = <span class="hljs-keyword">await</span> cryptoStore.load(<span class="hljs-string">&#x27;my key&#x27;</span>);
+<span class="hljs-keyword">const</span> decryptedValue = <span class="hljs-keyword">await</span> cryptoStore.get(<span class="hljs-string">&#x27;my key&#x27;</span>);
 expect(decryptedValue).toEqual(originalValue);</code></pre>
 			<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
 				<h2>Documentation</h2>
 			</a>
-			<p>You should check our GitHub Pages for <a href="https://willgm.github.io/web-crypto-store/">all available API and options</a>.</p>
-			<p>There is a <a href="https://github.com/willgm/web-crypto-store/tree/master/demo">full feature example of use</a> at the code base. The <a href="https://github.com/willgm/web-crypto-store/tree/master/test">test cases</a> are also quite readable and can be used as example for all the possible API uses.</p>
+			<p>You should check our GitHub Pages for <a href="https://willgm.github.io/web-crypto-storage/">all available API and options</a>.</p>
+			<p>There is a <a href="https://github.com/willgm/web-crypto-storage/tree/master/demo">full feature example of use</a> at the code base. The <a href="https://github.com/willgm/web-crypto-storage/tree/master/test">test cases</a> are also quite readable and can be used as example for all the possible API uses.</p>
 			<p>This project is heavily inspired on <a href="https://twitter.com/ttaubert">Tim Taubert</a>&#39;s talk at JSConf EU: <a href="https://www.youtube.com/watch?v=yf4m9LdO1zI">Keeping secrets with JavaScript</a>, if you want to better understand what happens under the hood, then watch it out.</p>
 			<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 				<h2>License</h2>
 			</a>
-			<p><a href="https://github.com/willgm/web-crypto-store/blob/master/LICENSE">MIT</a></p>
+			<p><a href="https://github.com/willgm/web-crypto-storage/blob/master/LICENSE">MIT</a></p>
 		</div>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
@@ -2810,7 +2810,7 @@ expect(decryptedValue).toEqual(originalValue);</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Input<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TypedArray</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/willgm/web-crypto-store/blob/5ae6601/src/web-crypto-storage.ts#L16">web-crypto-storage.ts:16</a></li>
+						<li>Defined in <a href="https://github.com/willgm/web-crypto-storage/blob/1df964a/src/web-crypto-storage.ts#L16">web-crypto-storage.ts:16</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">

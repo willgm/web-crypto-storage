@@ -1,5 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-const { CryptoStorage } = require('../dist/web-crypto-store.cjs');
+const { CryptoStorage } = require('../dist/web-crypto-storage.cjs');
 
 let cryptoStorage;
 
@@ -124,7 +124,7 @@ addEventListener('submit', event => {
   }
 });
 
-},{"../dist/web-crypto-store.cjs":2}],2:[function(require,module,exports){
+},{"../dist/web-crypto-storage.cjs":2}],2:[function(require,module,exports){
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -728,6 +728,32 @@ addEventListener('submit', event => {
             });
         };
         /**
+         * Delete individual data that match the given key.
+         *
+         * @param key The given key to find the data.
+         * @returns Promise to know when the process was complete.
+         */
+        CryptoStorage.prototype.delete = function (key) {
+            return __awaiter(this, void 0, void 0, function () {
+                var _a, _b, store, storeName, hashKey, hashNonce;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0: return [4 /*yield*/, all([
+                                this.internalConfig,
+                                generateHash(key),
+                                generateHash(key + '-nonce'),
+                            ])];
+                        case 1:
+                            _a = _c.sent(), _b = _a[0], store = _b[0], storeName = _b[1], hashKey = _a[1], hashNonce = _a[2];
+                            return [4 /*yield*/, all([store.delete(storeName, hashKey), store.delete(storeName, hashNonce)])];
+                        case 2:
+                            _c.sent();
+                            return [2 /*return*/];
+                    }
+                });
+            });
+        };
+        /**
          * Fully delete not only all the key and data stored at the current store and database,
          * but also deleting the whole store and database the structure.
          *
@@ -770,29 +796,33 @@ addEventListener('submit', event => {
     var init = function (_a) {
         var baseKey = _a.baseKey, _b = _a.dbName, dbName = _b === void 0 ? 'default-key-value-db' : _b, _c = _a.storeName, storeName = _c === void 0 ? 'default-key-value-storage' : _c, salt = _a.salt, encryptIterations = _a.encryptIterations;
         return __awaiter(void 0, void 0, void 0, function () {
-            return __generator(this, function (_d) {
-                if (!baseKey)
-                    throw new Error(CryptoStorage.CryptoKeyError);
-                return [2 /*return*/, all([
-                        generateHash(dbName),
-                        generateHash(storeName),
-                        baseKey instanceof CryptoKey ? baseKey : generateBaseCryptoKey(baseKey),
-                    ]).then(function (_a) {
-                        var dbHashName = _a[0], storeHashName = _a[1], cryptoBaseKey = _a[2];
-                        var decodedStorageName = decode(storeHashName);
-                        var store = openDB(decode(dbHashName), 1, {
+            var _d, dbHashName, storeHashName, cryptoBaseKey, decodedStorageName, store;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
+                    case 0:
+                        if (!baseKey)
+                            throw new Error(CryptoStorage.CryptoKeyError);
+                        return [4 /*yield*/, all([
+                                generateHash(dbName),
+                                generateHash(storeName),
+                                baseKey instanceof CryptoKey ? baseKey : generateBaseCryptoKey(baseKey),
+                            ])];
+                    case 1:
+                        _d = _e.sent(), dbHashName = _d[0], storeHashName = _d[1], cryptoBaseKey = _d[2];
+                        decodedStorageName = decode(storeHashName);
+                        store = openDB(decode(dbHashName), 1, {
                             upgrade: function (db) {
                                 db.createObjectStore(decodedStorageName);
                             },
                         });
-                        return all([
-                            store,
-                            decodedStorageName,
-                            cryptoBaseKey,
-                            verifySalt(store, decodedStorageName, salt),
-                            encryptIterations,
-                        ]);
-                    })];
+                        return [2 /*return*/, all([
+                                store,
+                                decodedStorageName,
+                                cryptoBaseKey,
+                                verifySalt(store, decodedStorageName, salt),
+                                encryptIterations,
+                            ])];
+                }
             });
         });
     };
