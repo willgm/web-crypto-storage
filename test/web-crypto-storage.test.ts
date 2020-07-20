@@ -219,11 +219,12 @@ describe('Web Crypto IndexDB', () => {
   });
 
   describe('when cleaning data', () => {
-    it('should clear all existing data', async () => {
+    it('should clear all existing data but the salt', async () => {
       const subject = registerSubject(new CryptoStorage('raw key'));
-      await subject.set('any key', 'any data');
+      await subject.set('any key 1', 'any data 1');
+      await subject.set('any key 2', 'any data 2');
       await subject.clear();
-      expect(await indexDbSearch(subject, { anyData: true })).toBeFalse();
+      expect(await indexDbSearch(subject, { justSalt: true })).toBeTrue();
     });
 
     it('should not delete the store', async () => {
@@ -238,6 +239,18 @@ describe('Web Crypto IndexDB', () => {
       await subject.set('any key', 'any data');
       await subject.clear();
       expect(await indexDbSearch(subject, { anyDb: true })).toBeTrue();
+    });
+
+    it('should be able to set new values after cleaning and get it from another instance', async () => {
+      const cryptoKey = 'raw key';
+      const key = 'any key';
+      const value = 'any value';
+      let subject = registerSubject(new CryptoStorage(cryptoKey));
+      await subject.set(key, value);
+      await subject.clear();
+      await subject.set(key, value);
+      subject = registerSubject(new CryptoStorage(cryptoKey));
+      expect(await subject.get(key)).toBe(value);
     });
   });
 
