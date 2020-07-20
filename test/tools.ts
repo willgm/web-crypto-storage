@@ -1,4 +1,4 @@
-import { CryptoStorage } from '../src/web-crypto-store';
+import { CryptoStorage } from '../src/web-crypto-storage';
 
 export const all = Promise.all.bind(Promise);
 
@@ -20,7 +20,7 @@ export function setupSubjectList() {
 
 export type SimpleObj = {
   anyData?: boolean;
-  anyStore?: boolean;
+  anyStorage?: boolean;
   anyDb?: boolean;
   dbName?: string;
   tbName?: string;
@@ -31,7 +31,7 @@ export type SimpleObj = {
 
 export const indexDbSearch = async (
   store: CryptoStorage,
-  { dbName, tbName, key, value, anyData, anyDb, anyStore }: SimpleObj,
+  { dbName, tbName, key, value, anyData, anyDb, anyStorage }: SimpleObj,
 ): Promise<boolean> => {
   if (anyDb) {
     const allDbs = await indexedDB.databases();
@@ -48,13 +48,13 @@ export const indexDbSearch = async (
   }
 
   // tslint:disable-next-line:no-string-literal
-  const [db, dbStoreName] = await store['internalConfig'];
+  const [db, dbStorageName] = await store['internalConfig'];
 
-  if (anyStore) {
+  if (anyStorage) {
     return db.objectStoreNames.length !== 0;
   }
 
-  const allKeys = await db.getAllKeys(dbStoreName);
+  const allKeys = await db.getAllKeys(dbStorageName);
 
   if (anyData) {
     return allKeys.length !== 0;
@@ -64,12 +64,12 @@ export const indexDbSearch = async (
     return true;
   }
 
-  if (tbName && tbName === dbStoreName) {
+  if (tbName && tbName === dbStorageName) {
     return true;
   }
 
   if (value) {
-    const values = await all(allKeys.map(k => db.get(dbStoreName, k)));
+    const values = await all(allKeys.map(k => db.get(dbStorageName, k)));
     const found = values.some(v => v === value);
     if (found) return true;
   }

@@ -128,7 +128,7 @@ addEventListener('submit', event => {
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = global || self, factory(global.webCryptoStore = {}));
+    (global = global || self, factory(global.webCryptoStorage = {}));
 }(this, (function (exports) { 'use strict';
 
     /*! *****************************************************************************
@@ -594,7 +594,7 @@ addEventListener('submit', event => {
     }));
 
     /**
-     * Crypto Store service used to save and load local encrypted data using IndexDB.
+     * Crypto Storage service used to save and load local encrypted data using IndexDB.
      */
     var CryptoStorage = /** @class */ (function () {
         function CryptoStorage(baseKeyOrConfig, dbName, storeName, salt, encryptIterations) {
@@ -765,7 +765,7 @@ addEventListener('submit', event => {
      * @internal
      */
     var init = function (_a) {
-        var baseKey = _a.baseKey, _b = _a.dbName, dbName = _b === void 0 ? 'default-key-value-db' : _b, _c = _a.storeName, storeName = _c === void 0 ? 'default-key-value-store' : _c, salt = _a.salt, encryptIterations = _a.encryptIterations;
+        var baseKey = _a.baseKey, _b = _a.dbName, dbName = _b === void 0 ? 'default-key-value-db' : _b, _c = _a.storeName, storeName = _c === void 0 ? 'default-key-value-storage' : _c, salt = _a.salt, encryptIterations = _a.encryptIterations;
         return __awaiter(void 0, void 0, void 0, function () {
             return __generator(this, function (_d) {
                 if (!baseKey)
@@ -776,17 +776,17 @@ addEventListener('submit', event => {
                         baseKey instanceof CryptoKey ? baseKey : generateBaseCryptoKey(baseKey),
                     ]).then(function (_a) {
                         var dbHashName = _a[0], storeHashName = _a[1], cryptoBaseKey = _a[2];
-                        var decodedStoreName = decode(storeHashName);
+                        var decodedStorageName = decode(storeHashName);
                         var store = openDB(decode(dbHashName), 1, {
                             upgrade: function (db) {
-                                db.createObjectStore(decodedStoreName);
+                                db.createObjectStore(decodedStorageName);
                             },
                         });
                         return all([
                             store,
-                            decodedStoreName,
+                            decodedStorageName,
                             cryptoBaseKey,
-                            salt !== null && salt !== void 0 ? salt : getSalt(store, decodedStoreName),
+                            salt !== null && salt !== void 0 ? salt : getSalt(store, decodedStorageName),
                             encryptIterations,
                         ]);
                     })];

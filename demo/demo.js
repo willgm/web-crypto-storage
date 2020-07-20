@@ -1,4 +1,4 @@
-const { CryptoStorage } = require('../dist/web-crypto-store.cjs');
+const { CryptoStorage } = require('../dist/web-crypto-storage.cjs');
 
 let cryptoStorage;
 
