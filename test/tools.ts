@@ -1,4 +1,5 @@
 import { CryptoStorage } from '../src/web-crypto-storage';
+import { generateHash, decode } from '@webcrypto/tools';
 
 export const all = Promise.all.bind(Promise);
 
@@ -11,7 +12,7 @@ export function setupSubjectList() {
       return subject;
     },
     clearSubjects() {
-      return all(Array.from(subjectList).map(db => db.delete().catch())).finally(() =>
+      return all(Array.from(subjectList).map(db => db.deleteDB().catch())).finally(() =>
         subjectList.clear(),
       );
     },
@@ -22,6 +23,7 @@ export type SimpleObj = {
   anyData?: boolean;
   anyStorage?: boolean;
   anyDb?: boolean;
+  justSalt?: boolean;
   dbName?: string;
   tbName?: string;
   storeName?: string;
@@ -31,7 +33,7 @@ export type SimpleObj = {
 
 export const indexDbSearch = async (
   store: CryptoStorage,
-  { dbName, tbName, key, value, anyData, anyDb, anyStorage }: SimpleObj,
+  { dbName, tbName, key, value, anyData, anyDb, anyStorage, justSalt }: SimpleObj,
 ): Promise<boolean> => {
   if (anyDb) {
     const allDbs = await indexedDB.databases();
@@ -57,7 +59,15 @@ export const indexDbSearch = async (
   const allKeys = await db.getAllKeys(dbStorageName);
 
   if (anyData) {
-    return allKeys.length !== 0;
+    // must have more than the salt
+    return allKeys.length > 1;
+  }
+
+  if (justSalt) {
+    if (allKeys.length !== 1) return false;
+
+    const saltHash = await generateHash('salt');
+    return decode(allKeys[0]) === decode(saltHash);
   }
 
   if (key && allKeys.some(k => k === key)) {

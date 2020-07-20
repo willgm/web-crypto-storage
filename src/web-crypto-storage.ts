@@ -158,8 +158,9 @@ export class CryptoStorage {
    * @returns Promise to know when the process was complete.
    */
   async clear(): Promise<void> {
-    const [store, storeName] = await this.internalConfig;
+    const [store, storeName, _, salt] = await this.internalConfig;
     await store.clear(storeName);
+    await verifySalt(store, storeName, salt);
   }
 
   /**
@@ -216,7 +217,7 @@ const init = async ({
       store,
       decodedStorageName,
       cryptoBaseKey,
-      salt ?? getSalt(store, decodedStorageName),
+      verifySalt(store, decodedStorageName, salt),
       encryptIterations,
     ]);
   });
@@ -225,24 +226,29 @@ const init = async ({
 /**
  * @internal
  */
-const getSalt = async (
-  storePromise: Promise<IDBPDatabase>,
+const verifySalt = async (
+  storePromise: IDBPDatabase | Promise<IDBPDatabase>,
   storeName: string,
+  salt?: TypedArray,
 ): Promise<TypedArray> => {
   const [hash, store] = await all([generateHash('salt'), storePromise]);
-  const salt = await store.get(storeName, hash);
-  return salt || createSalt(hash, store, storeName);
+  const existingSalt = await store.get(storeName, hash);
+  if (existingSalt && (!salt || existingSalt === salt)) {
+    return existingSalt;
+  }
+  return persistSalt(hash, store, storeName, salt);
 };
 
 /**
  * @internal
  */
-const createSalt = async (
+const persistSalt = async (
   saltHash: TypedArray,
   store: IDBPDatabase,
   storeName: string,
+  currentSalt?: TypedArray,
 ): Promise<TypedArray> => {
-  const newSalt = generateSalt();
-  await store.put(storeName, newSalt, saltHash);
-  return newSalt;
+  const salt = currentSalt ?? generateSalt();
+  await store.put(storeName, salt, saltHash);
+  return salt;
 };
