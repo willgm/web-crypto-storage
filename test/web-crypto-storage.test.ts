@@ -254,6 +254,44 @@ describe('Web Crypto IndexDB', () => {
     });
   });
 
+  describe('when deleting individual data', () => {
+    it('should keep the salt even if it deletes the only existing data', async () => {
+      const subject = registerSubject(new CryptoStorage('raw key'));
+      const key = 'any key 1';
+      await subject.set(key, 'any data 1');
+      await subject.delete(key);
+      expect(await indexDbSearch(subject, { justSalt: true })).toBeTrue();
+    });
+
+    it('should delete data only for the giving key', async () => {
+      const subject = registerSubject(new CryptoStorage('raw key'));
+      const key = 'any key 1';
+      await subject.set(key, 'any data 1');
+      await subject.set('any key 2', 'any data 2');
+      await subject.delete(key);
+      expect(await indexDbSearch(subject, { anyData: true })).toBeTrue();
+    });
+
+    it('should be able to set new data after deleting one', async () => {
+      const subject = registerSubject(new CryptoStorage('raw key'));
+      const key = 'any key 1';
+      await subject.set(key, 'any data 1');
+      await subject.delete(key);
+      await subject.set('any key 2', 'any data 2');
+      expect(await indexDbSearch(subject, { anyData: true })).toBeTrue();
+    });
+
+    it('should not be able to get the deleted data from another instance', async () => {
+      const cryptoKey = 'raw key';
+      const key = 'any key';
+      let subject = registerSubject(new CryptoStorage(cryptoKey));
+      await subject.set(key, 'any data');
+      await subject.delete(key);
+      subject = registerSubject(new CryptoStorage(cryptoKey));
+      expect(await subject.get(key)).toBeUndefined();
+    });
+  });
+
   describe('when deleting the database', () => {
     it('should delete the data base', async () => {
       const subject = new CryptoStorage('raw key');
