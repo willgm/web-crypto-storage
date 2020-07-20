@@ -110,7 +110,7 @@ export class CryptoStorage {
    * @param key The given key to find the data.
    * @returns Promise with the decrypted data that match the given key, or undefined if nothing was found.
    */
-  async load(key: InputData): Promise<string | undefined> {
+  async get(key: InputData): Promise<string | undefined> {
     const [[store, storeName, baseKey, salt, encryptIterations], hashKey, hashNonce] = await all([
       this.internalConfig,
       generateHash(key),
@@ -140,7 +140,7 @@ export class CryptoStorage {
    * @param value The value to be encrypted and stored.
    * @returns Promise to know when the encrypt and store process was complete.
    */
-  async save(key: InputData, value: InputData): Promise<void> {
+  async set(key: InputData, value: InputData): Promise<void> {
     const [[store, storeName, baseKey, salt, encryptIterations], hashKey, hashNonce] = await all([
       this.internalConfig,
       generateHash(key),
@@ -178,7 +178,7 @@ export class CryptoStorage {
    *
    * @returns Promise to know when the process was complete.
    */
-  async delete(): Promise<void> {
+  async deleteDB(): Promise<void> {
     const [store] = await this.internalConfig;
     store.close();
     await deleteDB(store.name);

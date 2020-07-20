@@ -38,7 +38,7 @@ const Buttons = {
     // Here the user password is used as base crypto key
     // and the user name is used as database name to fully scope the data:
     cryptoStorage = new CryptoStorage(pass, user);
-    cryptoStorage.load('mynotes').then(notes => {
+    cryptoStorage.get('mynotes').then(notes => {
       if (notes) {
         value('text', notes);
         updateStatus('Notes loaded for ' + user);
@@ -52,7 +52,7 @@ const Buttons = {
   },
 
   load() {
-    cryptoStorage.load('mynotes').then(notes => {
+    cryptoStorage.get('mynotes').then(notes => {
       if (notes) {
         value('text', notes);
         updateStatus('Notes loaded.');
@@ -64,7 +64,7 @@ const Buttons = {
 
   save() {
     const notes = value('text');
-    cryptoStorage.save('mynotes', notes).then(() => {
+    cryptoStorage.set('mynotes', notes).then(() => {
       updateStatus('Notes saved.');
     });
   },
@@ -613,7 +613,7 @@ addEventListener('submit', event => {
          * @param key The given key to find the data.
          * @returns Promise with the decrypted data that match the given key, or undefined if nothing was found.
          */
-        CryptoStorage.prototype.load = function (key) {
+        CryptoStorage.prototype.get = function (key) {
             return __awaiter(this, void 0, void 0, function () {
                 var _a, _b, store, storeName, baseKey, salt, encryptIterations, hashKey, hashNonce, cryptoValue, _c, cryptoKey, nonce, value, error_1;
                 return __generator(this, function (_d) {
@@ -658,7 +658,7 @@ addEventListener('submit', event => {
          * @param value The value to be encrypted and stored.
          * @returns Promise to know when the encrypt and store process was complete.
          */
-        CryptoStorage.prototype.save = function (key, value) {
+        CryptoStorage.prototype.set = function (key, value) {
             return __awaiter(this, void 0, void 0, function () {
                 var _a, _b, store, storeName, baseKey, salt, encryptIterations, hashKey, hashNonce, cryptoKey, _c, cryptoValue, nonce;
                 return __generator(this, function (_d) {
@@ -691,14 +691,17 @@ addEventListener('submit', event => {
          */
         CryptoStorage.prototype.clear = function () {
             return __awaiter(this, void 0, void 0, function () {
-                var _a, store, storeName;
+                var _a, store, storeName, _, salt;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0: return [4 /*yield*/, this.internalConfig];
                         case 1:
-                            _a = _b.sent(), store = _a[0], storeName = _a[1];
+                            _a = _b.sent(), store = _a[0], storeName = _a[1], _ = _a[2], salt = _a[3];
                             return [4 /*yield*/, store.clear(storeName)];
                         case 2:
+                            _b.sent();
+                            return [4 /*yield*/, verifySalt(store, storeName, salt)];
+                        case 3:
                             _b.sent();
                             return [2 /*return*/];
                     }
@@ -730,7 +733,7 @@ addEventListener('submit', event => {
          *
          * @returns Promise to know when the process was complete.
          */
-        CryptoStorage.prototype.delete = function () {
+        CryptoStorage.prototype.deleteDB = function () {
             return __awaiter(this, void 0, void 0, function () {
                 var store;
                 return __generator(this, function (_a) {
@@ -786,7 +789,7 @@ addEventListener('submit', event => {
                             store,
                             decodedStorageName,
                             cryptoBaseKey,
-                            salt !== null && salt !== void 0 ? salt : getSalt(store, decodedStorageName),
+                            verifySalt(store, decodedStorageName, salt),
                             encryptIterations,
                         ]);
                     })];
@@ -796,8 +799,8 @@ addEventListener('submit', event => {
     /**
      * @internal
      */
-    var getSalt = function (storePromise, storeName) { return __awaiter(void 0, void 0, void 0, function () {
-        var _a, hash, store, salt;
+    var verifySalt = function (storePromise, storeName, salt) { return __awaiter(void 0, void 0, void 0, function () {
+        var _a, hash, store, existingSalt;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, all([generateHash('salt'), storePromise])];
@@ -805,24 +808,27 @@ addEventListener('submit', event => {
                     _a = _b.sent(), hash = _a[0], store = _a[1];
                     return [4 /*yield*/, store.get(storeName, hash)];
                 case 2:
-                    salt = _b.sent();
-                    return [2 /*return*/, salt || createSalt(hash, store, storeName)];
+                    existingSalt = _b.sent();
+                    if (existingSalt && (!salt || existingSalt === salt)) {
+                        return [2 /*return*/, existingSalt];
+                    }
+                    return [2 /*return*/, persistSalt(hash, store, storeName, salt)];
             }
         });
     }); };
     /**
      * @internal
      */
-    var createSalt = function (saltHash, store, storeName) { return __awaiter(void 0, void 0, void 0, function () {
-        var newSalt;
+    var persistSalt = function (saltHash, store, storeName, currentSalt) { return __awaiter(void 0, void 0, void 0, function () {
+        var salt;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    newSalt = generateSalt();
-                    return [4 /*yield*/, store.put(storeName, newSalt, saltHash)];
+                    salt = currentSalt !== null && currentSalt !== void 0 ? currentSalt : generateSalt();
+                    return [4 /*yield*/, store.put(storeName, salt, saltHash)];
                 case 1:
                     _a.sent();
-                    return [2 /*return*/, newSalt];
+                    return [2 /*return*/, salt];
             }
         });
     }); };

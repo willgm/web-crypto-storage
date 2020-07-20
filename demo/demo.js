@@ -37,7 +37,7 @@ const Buttons = {
     // Here the user password is used as base crypto key
     // and the user name is used as database name to fully scope the data:
     cryptoStorage = new CryptoStorage(pass, user);
-    cryptoStorage.load('mynotes').then(notes => {
+    cryptoStorage.get('mynotes').then(notes => {
       if (notes) {
         value('text', notes);
         updateStatus('Notes loaded for ' + user);
@@ -51,7 +51,7 @@ const Buttons = {
   },
 
   load() {
-    cryptoStorage.load('mynotes').then(notes => {
+    cryptoStorage.get('mynotes').then(notes => {
       if (notes) {
         value('text', notes);
         updateStatus('Notes loaded.');
@@ -63,7 +63,7 @@ const Buttons = {
 
   save() {
     const notes = value('text');
-    cryptoStorage.save('mynotes', notes).then(() => {
+    cryptoStorage.set('mynotes', notes).then(() => {
       updateStatus('Notes saved.');
     });
   },
