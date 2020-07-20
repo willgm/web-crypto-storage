@@ -7,7 +7,7 @@ import typescript from 'rollup-plugin-typescript2';
 
 const pkg = require('./package.json');
 
-const libraryName = 'web-crypto-store';
+const libraryName = 'web-crypto-storage';
 
 const config = (tsconfigOverride = {}) => ({
   input: `src/${libraryName}.ts`,

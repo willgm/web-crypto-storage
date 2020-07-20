@@ -1,6 +1,6 @@
 import { generateBaseCryptoKey } from '@webcrypto/tools';
 
-import { CryptoStorage } from '../src/web-crypto-store';
+import { CryptoStorage } from '../src/web-crypto-storage';
 import { getErrorMessage, indexDbSearch, setupSubjectList } from './tools';
 
 declare global {
@@ -230,7 +230,7 @@ describe('Web Crypto IndexDB', () => {
       const subject = registerSubject(new CryptoStorage('raw key'));
       await subject.save('any key', 'any data');
       await subject.clear();
-      expect(await indexDbSearch(subject, { anyStore: true })).toBeTrue();
+      expect(await indexDbSearch(subject, { anyStorage: true })).toBeTrue();
     });
 
     it('should not delete the data base', async () => {

@@ -16,9 +16,9 @@ import { deleteDB, IDBPDatabase, openDB } from 'idb';
 export type InputData = string | TypedArray;
 
 /**
- * Configuration used to initialize the Crypto Store.
+ * Configuration used to initialize the Crypto Storage.
  */
-export interface CryptoStoreConfig {
+export interface CryptoStorageConfig {
   /**
    * Base key used to encrypt the stored data.
    */
@@ -28,7 +28,7 @@ export interface CryptoStoreConfig {
    */
   dbName?: string;
   /**
-   * Store name used to store the data.
+   * Storage name used to store the data.
    */
   storeName?: string;
   /**
@@ -47,7 +47,7 @@ export interface CryptoStoreConfig {
 type InternalConfig = [IDBPDatabase<any>, string, CryptoKey, TypedArray, number | undefined];
 
 /**
- * Crypto Store service used to save and load local encrypted data using IndexDB.
+ * Crypto Storage service used to save and load local encrypted data using IndexDB.
  */
 export class CryptoStorage {
   /**
@@ -68,12 +68,12 @@ export class CryptoStorage {
   /**
    * Base constructor that receive all the configuration as an object.
    */
-  constructor(config: CryptoStoreConfig);
+  constructor(config: CryptoStorageConfig);
   /**
    * Base constructor.
    * @param baseKey Base key used to encrypt the stored data.
    * @param dbName Database name used to store the data.
-   * @param storeName Store name used to store the data.
+   * @param storeName Storage name used to store the data.
    * @param salt Custom salt used to encrypt the stored data.
    * @param encryptIterations Custom iteration cycles to encrypt the stored data.
    */
@@ -85,7 +85,7 @@ export class CryptoStorage {
     encryptIterations?: number,
   );
   constructor(
-    baseKeyOrConfig: InputData | CryptoKey | CryptoStoreConfig,
+    baseKeyOrConfig: InputData | CryptoKey | CryptoStorageConfig,
     dbName?: string,
     storeName?: string,
     salt?: TypedArray,
@@ -93,14 +93,14 @@ export class CryptoStorage {
   ) {
     this.internalConfig = init(
       baseKeyOrConfig?.hasOwnProperty('baseKey')
-        ? (baseKeyOrConfig as CryptoStoreConfig)
+        ? (baseKeyOrConfig as CryptoStorageConfig)
         : ({
             baseKey: baseKeyOrConfig,
             dbName,
             storeName,
             salt,
             encryptIterations,
-          } as CryptoStoreConfig),
+          } as CryptoStorageConfig),
     );
   }
 
@@ -196,27 +196,27 @@ const all = Promise.all.bind(Promise);
 const init = async ({
   baseKey,
   dbName = 'default-key-value-db',
-  storeName = 'default-key-value-store',
+  storeName = 'default-key-value-storage',
   salt,
   encryptIterations,
-}: CryptoStoreConfig): Promise<InternalConfig> => {
+}: CryptoStorageConfig): Promise<InternalConfig> => {
   if (!baseKey) throw new Error(CryptoStorage.CryptoKeyError);
   return all([
     generateHash(dbName),
     generateHash(storeName),
     baseKey instanceof CryptoKey ? baseKey : generateBaseCryptoKey(baseKey),
   ]).then(([dbHashName, storeHashName, cryptoBaseKey]) => {
-    const decodedStoreName = decode(storeHashName);
+    const decodedStorageName = decode(storeHashName);
     const store = openDB(decode(dbHashName), 1, {
       upgrade(db) {
-        db.createObjectStore(decodedStoreName);
+        db.createObjectStore(decodedStorageName);
       },
     });
     return all([
       store,
-      decodedStoreName,
+      decodedStorageName,
       cryptoBaseKey,
-      salt ?? getSalt(store, decodedStoreName),
+      salt ?? getSalt(store, decodedStorageName),
       encryptIterations,
     ]);
   });
