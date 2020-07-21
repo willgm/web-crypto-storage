@@ -1,7 +1,7 @@
 import { generateBaseCryptoKey } from '@webcrypto/tools';
 
 import { CryptoStorage } from '../src/web-crypto-storage';
-import { getErrorMessage, indexDbSearch, setupSubjectList } from './tools';
+import { getErrorMessage, indexedDBSearch, setupSubjectList } from './tools';
 
 declare global {
   interface IDBFactory {
@@ -11,7 +11,7 @@ declare global {
 
 const { registerSubject, clearSubjects } = setupSubjectList();
 
-describe('Web Crypto IndexDB', () => {
+describe('Web Crypto IndexedDB', () => {
   afterEach(async () => {
     await clearSubjects();
   });
@@ -36,7 +36,7 @@ describe('Web Crypto IndexDB', () => {
     it('should be able to save data with a raw crypto key', async () => {
       const subject = registerSubject(new CryptoStorage('raw key'));
       await subject.set('any key', 'any value');
-      const result = await indexDbSearch(subject, { anyData: true });
+      const result = await indexedDBSearch(subject, { anyData: true });
       expect(result).toBeTrue();
     });
 
@@ -44,7 +44,7 @@ describe('Web Crypto IndexDB', () => {
       const cryptoKey = await generateBaseCryptoKey('raw key');
       const subject = registerSubject(new CryptoStorage(cryptoKey));
       await subject.set('any key', 'any value');
-      const result = await indexDbSearch(subject, { anyData: true });
+      const result = await indexedDBSearch(subject, { anyData: true });
       expect(result).toBeTrue();
     });
 
@@ -52,7 +52,7 @@ describe('Web Crypto IndexDB', () => {
       const subject = registerSubject(new CryptoStorage('raw key'));
       const key = 'any key';
       await subject.set(key, 'any value');
-      const result = await indexDbSearch(subject, { key });
+      const result = await indexedDBSearch(subject, { key });
       expect(result).toBeFalse();
     });
 
@@ -60,7 +60,7 @@ describe('Web Crypto IndexDB', () => {
       const subject = registerSubject(new CryptoStorage('raw key'));
       const value = 'any value';
       await subject.set('any key', value);
-      const result = await indexDbSearch(subject, { value });
+      const result = await indexedDBSearch(subject, { value });
       expect(result).toBeFalse();
     });
 
@@ -68,7 +68,7 @@ describe('Web Crypto IndexDB', () => {
       const dbName = 'any db';
       const subject = registerSubject(new CryptoStorage('raw key', dbName));
       await subject.set('any key', 'any value');
-      const result = await indexDbSearch(subject, { dbName });
+      const result = await indexedDBSearch(subject, { dbName });
       expect(result).toBeFalse();
     });
 
@@ -76,7 +76,7 @@ describe('Web Crypto IndexDB', () => {
       const storeName = 'any db';
       const subject = registerSubject(new CryptoStorage('raw key', undefined, storeName));
       await subject.set('any key', 'any value');
-      const result = await indexDbSearch(subject, { storeName });
+      const result = await indexedDBSearch(subject, { storeName });
       expect(result).toBeFalse();
     });
 
@@ -84,7 +84,7 @@ describe('Web Crypto IndexDB', () => {
       const dbName = 'any db';
       const subject = registerSubject(new CryptoStorage({ baseKey: 'raw key', dbName }));
       await subject.set('any key', 'any value');
-      const result = await indexDbSearch(subject, { dbName });
+      const result = await indexedDBSearch(subject, { dbName });
       expect(result).toBeFalse();
     });
 
@@ -92,7 +92,7 @@ describe('Web Crypto IndexDB', () => {
       const storeName = 'any db';
       const subject = registerSubject(new CryptoStorage({ baseKey: 'raw key', storeName }));
       await subject.set('any key', 'any value');
-      const result = await indexDbSearch(subject, { storeName });
+      const result = await indexedDBSearch(subject, { storeName });
       expect(result).toBeFalse();
     });
   });
@@ -224,21 +224,21 @@ describe('Web Crypto IndexDB', () => {
       await subject.set('any key 1', 'any data 1');
       await subject.set('any key 2', 'any data 2');
       await subject.clear();
-      expect(await indexDbSearch(subject, { justSalt: true })).toBeTrue();
+      expect(await indexedDBSearch(subject, { justSalt: true })).toBeTrue();
     });
 
     it('should not delete the store', async () => {
       const subject = registerSubject(new CryptoStorage('raw key'));
       await subject.set('any key', 'any data');
       await subject.clear();
-      expect(await indexDbSearch(subject, { anyStorage: true })).toBeTrue();
+      expect(await indexedDBSearch(subject, { anyStorage: true })).toBeTrue();
     });
 
     it('should not delete the data base', async () => {
       const subject = registerSubject(new CryptoStorage('raw key'));
       await subject.set('any key', 'any data');
       await subject.clear();
-      expect(await indexDbSearch(subject, { anyDb: true })).toBeTrue();
+      expect(await indexedDBSearch(subject, { anyDb: true })).toBeTrue();
     });
 
     it('should be able to set new values after cleaning and get it from another instance', async () => {
@@ -260,7 +260,7 @@ describe('Web Crypto IndexDB', () => {
       const key = 'any key 1';
       await subject.set(key, 'any data 1');
       await subject.delete(key);
-      expect(await indexDbSearch(subject, { justSalt: true })).toBeTrue();
+      expect(await indexedDBSearch(subject, { justSalt: true })).toBeTrue();
     });
 
     it('should delete data only for the giving key', async () => {
@@ -269,7 +269,7 @@ describe('Web Crypto IndexDB', () => {
       await subject.set(key, 'any data 1');
       await subject.set('any key 2', 'any data 2');
       await subject.delete(key);
-      expect(await indexDbSearch(subject, { anyData: true })).toBeTrue();
+      expect(await indexedDBSearch(subject, { anyData: true })).toBeTrue();
     });
 
     it('should be able to set new data after deleting one', async () => {
@@ -278,7 +278,7 @@ describe('Web Crypto IndexDB', () => {
       await subject.set(key, 'any data 1');
       await subject.delete(key);
       await subject.set('any key 2', 'any data 2');
-      expect(await indexDbSearch(subject, { anyData: true })).toBeTrue();
+      expect(await indexedDBSearch(subject, { anyData: true })).toBeTrue();
     });
 
     it('should not be able to get the deleted data from another instance', async () => {
@@ -297,7 +297,7 @@ describe('Web Crypto IndexDB', () => {
       const subject = new CryptoStorage('raw key');
       await subject.set('any key', 'any data');
       await subject.deleteDB();
-      expect(await indexDbSearch(subject, { anyDb: true })).toBeFalsy();
+      expect(await indexedDBSearch(subject, { anyDb: true })).toBeFalsy();
     });
   });
 
@@ -307,7 +307,7 @@ describe('Web Crypto IndexDB', () => {
       await subject.set('any key', 'any data');
       await subject.close();
       subject = registerSubject(new CryptoStorage('raw key'));
-      expect(await indexDbSearch(subject, { anyData: true })).toBeTrue();
+      expect(await indexedDBSearch(subject, { anyData: true })).toBeTrue();
     });
   });
 });

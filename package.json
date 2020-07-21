@@ -10,7 +10,7 @@
     "crypto",
     "store",
     "storage",
-    "indexdb",
+    "indexeddb",
     "cryptography",
     "keyval",
     "security",

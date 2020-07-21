@@ -47,7 +47,7 @@ export interface CryptoStorageConfig {
 type InternalConfig = [IDBPDatabase<any>, string, CryptoKey, TypedArray, number | undefined];
 
 /**
- * Crypto Storage service used to save and load local encrypted data using IndexDB.
+ * Crypto Storage service used to save and load local encrypted data using IndexedDB.
  */
 export class CryptoStorage {
   /**
