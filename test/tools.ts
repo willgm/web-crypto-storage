@@ -31,7 +31,7 @@ export type SimpleObj = {
   value?: string;
 };
 
-export const indexDbSearch = async (
+export const indexedDBSearch = async (
   store: CryptoStorage,
   { dbName, tbName, key, value, anyData, anyDb, anyStorage, justSalt }: SimpleObj,
 ): Promise<boolean> => {

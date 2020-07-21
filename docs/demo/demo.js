@@ -594,7 +594,7 @@ addEventListener('submit', event => {
     }));
 
     /**
-     * Crypto Storage service used to save and load local encrypted data using IndexDB.
+     * Crypto Storage service used to save and load local encrypted data using IndexedDB.
      */
     var CryptoStorage = /** @class */ (function () {
         function CryptoStorage(baseKeyOrConfig, dbName, storeName, salt, encryptIterations) {
