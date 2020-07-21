@@ -39,11 +39,11 @@ expect(decryptedValue).toEqual(originalValue);
 
 ## Documentation
 
-You should check our GitHub Pages for [all available API and options](https://willgm.github.io/web-crypto-storage/).
+You should check our GitHub Pages for [all available APIs and options](https://willgm.github.io/web-crypto-storage/).
 
-There is a [full feature example of use](https://github.com/willgm/web-crypto-storage/tree/master/demo) at the code base. The [test cases](https://github.com/willgm/web-crypto-storage/tree/master/test) are also quite readable and can be used as example for all the possible API uses.
+There is a [full feature example of use](https://github.com/willgm/web-crypto-storage/tree/master/demo) at the code base. The [test cases](https://github.com/willgm/web-crypto-storage/tree/master/test) are also quite readable and can be used as an example for every possible use of the public API.
 
-This project is heavily inspired on [Tim Taubert](https://twitter.com/ttaubert)'s talk at JSConf EU: [Keeping secrets with JavaScript](https://www.youtube.com/watch?v=yf4m9LdO1zI), if you want to better understand what happens under the hood, then watch it out.
+This project is heavily inspired on [Tim Taubert](https://twitter.com/ttaubert)'s talk at JSConf EU: [Keeping secrets with JavaScript](https://www.youtube.com/watch?v=yf4m9LdO1zI), if you want to better understand what happens under the hood, then I highly recommend for you to watch it out.
 
 ## License
 
