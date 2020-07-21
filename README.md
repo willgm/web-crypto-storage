@@ -21,15 +21,19 @@ npm install @webcrypto/storage --save
 ### Store your crypto data
 
 ```ts
-// create a new instance of the crypto storage
-const cryptoStore = new CryptoStorage('my raw key');
+// Create a new instance of the crypto storage and give it a key!
+// You normally would never hard code this crypto key, it normally
+// should come from the user password or some server integration
+const cryptoStore = new CryptoStorage('my crypto key');
 
-// secure store your data locally fully encrypted
+// Secure store your data locally fully encrypted
 const originalValue = 'any data value';
-await cryptoStore.set('my key', originalValue);
+await cryptoStore.set('data key', originalValue);
 
-// retrieve your original data decrypted again
-const decryptedValue = await cryptoStore.get('my key');
+// Look at the browser dev tools from IndexedDb,
+// you will not be able to read the data key or value.
+// Then, retrieve your original data decrypted again:
+const decryptedValue = await cryptoStore.get('data key');
 expect(decryptedValue).toEqual(originalValue);
 ```
 
