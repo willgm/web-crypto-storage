@@ -1,14 +1,24 @@
 # Web Crypto Storage
 
 <p>
-  <img
-    alt="Build"
-    src="https://img.shields.io/github/workflow/status/willgm/web-crypto-storage/CI"
-  />
-  <img
-    alt="Version"
-    src="https://img.shields.io/github/package-json/v/willgm/web-crypto-storage"
-  />
+  <a
+    href="https://github.com/willgm/web-crypto-storage/actions"
+    target="_blank"
+  >
+    <img
+      alt="Build"
+      src="https://img.shields.io/github/workflow/status/willgm/web-crypto-storage/CI"
+    />
+  </a>
+  <a
+    href="https://www.npmjs.com/package/@webcrypto/storage"
+    target="_blank"
+  >
+    <img
+      alt="Version"
+      src="https://img.shields.io/github/package-json/v/willgm/web-crypto-storage"
+    />
+  </a>
   <a
     href="https://willgm.github.io/web-crypto-storage/demo/index.html"
     target="_blank"
@@ -23,8 +33,8 @@
     target="_blank"
   >
     <img
-      src="https://img.shields.io/badge/license-Apache--2.0-blue.svg"
-      alt="Venice is released under the Apache-2.0 license"
+      src="https://img.shields.io/badge/license-MIT-blue.svg"
+      alt="web-crypto-storage is released under the MIT license"
     />
   </a>
   <a
@@ -33,7 +43,7 @@
   >
     <img
       alt="Contributors"
-      src="https://img.shields.io/github/contributors/juntossomosmais/venice.svg"
+      src="https://img.shields.io/github/contributors/willgm/web-crypto-storage.svg"
     />
   </a>
 </p>
