@@ -1,16 +1,56 @@
 # Web Crypto Storage
 
+<p>
+  <img
+    alt="Build"
+    src="https://img.shields.io/github/workflow/status/willgm/web-crypto-storage/CI"
+  />
+  <img
+    alt="Version"
+    src="https://img.shields.io/github/package-json/v/willgm/web-crypto-storage"
+  />
+  <a
+    href="https://willgm.github.io/web-crypto-storage/demo/index.html"
+    target="_blank"
+  >
+    <img
+      alt="Demo"
+      src="https://img.shields.io/badge/demo-online-green"
+    />
+  </a>
+  <a
+    href="https://github.com/willgm/web-crypto-storage/blob/master/LICENSE"
+    target="_blank"
+  >
+    <img
+      src="https://img.shields.io/badge/license-Apache--2.0-blue.svg"
+      alt="Venice is released under the Apache-2.0 license"
+    />
+  </a>
+  <a
+    href="https://github.com/willgm/web-crypto-storage/graphs/contributors"
+    target="_blank"
+  >
+    <img
+      alt="Contributors"
+      src="https://img.shields.io/github/contributors/juntossomosmais/venice.svg"
+    />
+  </a>
+</p>
+
+> A tiny promise-based crypto keyval storage using IndexedDB and the native Web Crypto API
+
 This is a tiny promise-based crypto keyval storage using IndexedDB and the native [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API), having just two small dependencies: [IDB](https://github.com/jakearchibald/idb) for a better devxp using IndexedDB and [Web Crypto Tools](https://github.com/willgm/web-crypto-tools) for a better devxp using the Web Crypto API.
 
 This crypto storage not only encrypt/decrypt the data but also checks for integrity, verifying if the stored data were manually updated. It uses the default crypto algorithms on [Web Crypto Tools](https://github.com/willgm/web-crypto-tools), which are `PBKDF2` for hashing and key derivation and `AES-GCM` for encryption, with the option to customize the used salt and encrypt iterations. The base crypto key is safely used in memory and never stored locally, if at the next session the base crypto key is lost, the data cannot be decrypted back to the original value.
 
 This project depends on the browser implementation of [Crypto API](https://caniuse.com/#feat=cryptography) and [TextEncoder API](https://caniuse.com/#feat=textencoder), which are both current implemented on all green browsers. If you do need to support any older browser, you should look for available polyfills.
 
-## Demo
+## :house: Demo
 
 You can play with a [full feature demo](https://willgm.github.io/web-crypto-storage/demo/index.html) on our Github Pages.
 
-## Usage
+## :gear: Usage
 
 ### Install the project
 
@@ -37,7 +77,7 @@ const decryptedValue = await cryptoStore.get('data key');
 expect(decryptedValue).toEqual(originalValue);
 ```
 
-## Documentation
+## :book: Documentation
 
 You should check our GitHub Pages for [all available APIs and options](https://willgm.github.io/web-crypto-storage/).
 
