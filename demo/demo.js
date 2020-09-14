@@ -82,10 +82,10 @@ const Buttons = {
   logout() {
     value('user', '');
     value('pass', '');
-    // cryptoStorage.close();
+    cryptoStorage.close();
     setclass('login', 'show');
     setclass('notes', 'hide');
-    updateStatus('Logged out...');
+    updateStatus('Logged out.');
     focus('user');
   },
 };
