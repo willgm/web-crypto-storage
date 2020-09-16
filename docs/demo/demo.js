@@ -83,10 +83,10 @@ const Buttons = {
   logout() {
     value('user', '');
     value('pass', '');
-    // cryptoStorage.close();
+    cryptoStorage.close();
     setclass('login', 'show');
     setclass('notes', 'hide');
-    updateStatus('Logged out...');
+    updateStatus('Logged out.');
     focus('user');
   },
 };
@@ -128,7 +128,7 @@ addEventListener('submit', event => {
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = global || self, factory(global.webCryptoStorage = {}));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.webCryptoStorage = {}));
 }(this, (function (exports) { 'use strict';
 
     /*! *****************************************************************************

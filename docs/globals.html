@@ -2739,26 +2739,76 @@ img {
 			<a href="#web-crypto-storage" id="web-crypto-storage" style="color: inherit; text-decoration: none;">
 				<h1>Web Crypto Storage</h1>
 			</a>
+			<p>
+				<a
+				href="https://github.com/willgm/web-crypto-storage/actions"
+				target="_blank"
+				>
+				<img
+				alt="Build"
+				src="https://img.shields.io/github/workflow/status/willgm/web-crypto-storage/CI"
+				/>
+				</a>
+				<a
+				href="https://www.npmjs.com/package/@webcrypto/storage"
+				target="_blank"
+				>
+				<img
+				alt="Version"
+				src="https://img.shields.io/github/package-json/v/willgm/web-crypto-storage"
+				/>
+				</a>
+				<a
+				href="https://willgm.github.io/web-crypto-storage/demo/index.html"
+				target="_blank"
+				>
+				<img
+				alt="Demo"
+				src="https://img.shields.io/badge/demo-online-green"
+				/>
+				</a>
+				<a
+				href="https://github.com/willgm/web-crypto-storage/blob/master/LICENSE"
+				target="_blank"
+				>
+				<img
+				src="https://img.shields.io/badge/license-MIT-blue.svg"
+				alt="web-crypto-storage is released under the MIT license"
+				/>
+				</a>
+				<a
+				href="https://github.com/willgm/web-crypto-storage/graphs/contributors"
+				target="_blank"
+				>
+				<img
+				alt="Contributors"
+				src="https://img.shields.io/github/contributors/willgm/web-crypto-storage.svg"
+				/>
+				</a>
+			</p>
+			<blockquote>
+				<p>A tiny promise-based crypto keyval storage using IndexedDB and the native Web Crypto API</p>
+			</blockquote>
 			<p>This is a tiny promise-based crypto keyval storage using IndexedDB and the native <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API">Web Crypto API</a>, having just two small dependencies: <a href="https://github.com/jakearchibald/idb">IDB</a> for a better devxp using IndexedDB and <a href="https://github.com/willgm/web-crypto-tools">Web Crypto Tools</a> for a better devxp using the Web Crypto API.</p>
 			<p>This crypto storage not only encrypt/decrypt the data but also checks for integrity, verifying if the stored data were manually updated. It uses the default crypto algorithms on <a href="https://github.com/willgm/web-crypto-tools">Web Crypto Tools</a>, which are <code>PBKDF2</code> for hashing and key derivation and <code>AES-GCM</code> for encryption, with the option to customize the used salt and encrypt iterations. The base crypto key is safely used in memory and never stored locally, if at the next session the base crypto key is lost, the data cannot be decrypted back to the original value.</p>
 			<p>This project depends on the browser implementation of <a href="https://caniuse.com/#feat=cryptography">Crypto API</a> and <a href="https://caniuse.com/#feat=textencoder">TextEncoder API</a>, which are both current implemented on all green browsers. If you do need to support any older browser, you should look for available polyfills.</p>
-			<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
-				<h2>Demo</h2>
+			<a href="#house-demo" id="house-demo" style="color: inherit; text-decoration: none;">
+				<h2>:house: Demo</h2>
 			</a>
 			<p>You can play with a <a href="https://willgm.github.io/web-crypto-storage/demo/index.html">full feature demo</a> on our Github Pages.</p>
-			<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-				<h2>Usage</h2>
+			<a href="#gear-usage" id="gear-usage" style="color: inherit; text-decoration: none;">
+				<h2>:gear: Usage</h2>
 			</a>
-			<a href="#install-the-project" id="install-the-project" style="color: inherit; text-decoration: none;">
-				<h3>Install the project</h3>
+			<a href="#install-it-at-your-project" id="install-it-at-your-project" style="color: inherit; text-decoration: none;">
+				<h3>Install it at your project</h3>
 			</a>
 			<pre><code class="language-bash">npm install @webcrypto/storage --save</code></pre>
 			<a href="#store-your-crypto-data" id="store-your-crypto-data" style="color: inherit; text-decoration: none;">
 				<h3>Store your crypto data</h3>
 			</a>
 			<pre><code class="language-ts"><span class="hljs-comment">// Create a new instance of the crypto storage and give it a key!</span>
-<span class="hljs-comment">// You normally would never hard code this crypto key, it normally</span>
-<span class="hljs-comment">// should come from the user password or some server integration</span>
+<span class="hljs-comment">// Be aware that normally you would never hard code the key like in this example,</span>
+<span class="hljs-comment">// take a look at the FAQ for more information on how to handle crypto keys.</span>
 <span class="hljs-keyword">const</span> cryptoStore = <span class="hljs-keyword">new</span> CryptoStorage(<span class="hljs-string">&#x27;my crypto key&#x27;</span>);
 
 <span class="hljs-comment">// Secure store your data locally fully encrypted</span>
@@ -2770,12 +2820,31 @@ img {
 <span class="hljs-comment">// Then, retrieve your original data decrypted again:</span>
 <span class="hljs-keyword">const</span> decryptedValue = <span class="hljs-keyword">await</span> cryptoStore.get(<span class="hljs-string">&#x27;data key&#x27;</span>);
 expect(decryptedValue).toEqual(originalValue);</code></pre>
-			<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
-				<h2>Documentation</h2>
+			<a href="#book-documentation" id="book-documentation" style="color: inherit; text-decoration: none;">
+				<h2>:book: Documentation</h2>
 			</a>
 			<p>You should check our GitHub Pages for <a href="https://willgm.github.io/web-crypto-storage/">all available APIs and options</a>.</p>
 			<p>There is a <a href="https://github.com/willgm/web-crypto-storage/tree/master/demo">full feature example of use</a> at the code base. The <a href="https://github.com/willgm/web-crypto-storage/tree/master/test">test cases</a> are also quite readable and can be used as an example for every possible use of the public API.</p>
 			<p>This project is heavily inspired on <a href="https://twitter.com/ttaubert">Tim Taubert</a>&#39;s talk at JSConf EU: <a href="https://www.youtube.com/watch?v=yf4m9LdO1zI">Keeping secrets with JavaScript</a>, if you want to better understand what happens under the hood, then I highly recommend for you to watch it out.</p>
+			<a href="#crypto-key-faq" id="crypto-key-faq" style="color: inherit; text-decoration: none;">
+				<h3>Crypto Key FAQ</h3>
+			</a>
+			<a href="#what-should-i-use-as-the-crypto-key" id="what-should-i-use-as-the-crypto-key" style="color: inherit; text-decoration: none;">
+				<h4>What should I use as the crypto key?</h4>
+			</a>
+			<p>There is no perfect answer to this question, it depends on your objective using this library and the application itself. If you do want to have strong security and make as difficult as possible to someone not authorized to access the data, then the crypto key should be unique per user, something strong that only the user knows and it is never stored anywhere out of his mind, as the <strong>user password</strong>. But it is not the only possible strategy, you can do any sort of server integration to obtain a crypto key, by session or any other thing that makes sense to your product logic or application platform.</p>
+			<a href="#where-should-i-store-the-crypto-key" id="where-should-i-store-the-crypto-key" style="color: inherit; text-decoration: none;">
+				<h4>Where should I store the crypto key?</h4>
+			</a>
+			<p>If you really want to have your data protected, then the crypto key should never be stored in the browser, ideally should be something that you never store anywhere and just your user knows, like his password. But for some apps it doesn&#39;t make sense to use the user password or other user input as crypto key, then would be better to use some server integration to store and obtain the key when needed.</p>
+			<a href="#what-about-hard-coded-key-at-the-app-bundle" id="what-about-hard-coded-key-at-the-app-bundle" style="color: inherit; text-decoration: none;">
+				<h4>What about hard coded key at the app bundle?</h4>
+			</a>
+			<p>The only scenario that it can make sense is if you just don&#39;t want to make obvious what you are storing on the browser, but you are not really worried if an advanced user go all the way through to decrypt the data. Please consider a better strategy that makes sense to your application.</p>
+			<a href="#how-does-this-library-handles-and-stores-the-crypto-key" id="how-does-this-library-handles-and-stores-the-crypto-key" style="color: inherit; text-decoration: none;">
+				<h4>How does this library handles and stores the crypto key?</h4>
+			</a>
+			<p>This library doesn&#39;t store the crypto key anywhere, not even in memory, &#39;cause the first thing that this library does when it receives the given key is to derivate it to a new one, which will be actually used to encrypt/decrypt and kept in memory for this session. The new derived crypto key cannot be reverted to the original value, and is only kept in memory, so the original key will be necessary again at the next session, so that the stored encrypted data can be decrypted again.</p>
 			<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 				<h2>License</h2>
 			</a>
@@ -2814,7 +2883,7 @@ expect(decryptedValue).toEqual(originalValue);</code></pre>
 				<div class="tsd-signature tsd-kind-icon">Input<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TypedArray</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/willgm/web-crypto-storage/blob/1df964a/src/web-crypto-storage.ts#L16">web-crypto-storage.ts:16</a></li>
+						<li>Defined in <a href="https://github.com/willgm/web-crypto-storage/blob/a732caa/src/web-crypto-storage.ts#L16">web-crypto-storage.ts:16</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">

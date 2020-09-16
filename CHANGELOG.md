@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/willgm/web-crypto-storage/compare/v2.0.0...v2.0.1) (2020-09-16)
+
+
+### Bug Fixes
+
+* **update:** bump dependencies ([9489e25](https://github.com/willgm/web-crypto-storage/commit/9489e258dbd89000fbed9a329c9bccb24dfcaf0a))
+
 # [2.0.0](https://github.com/willgm/web-crypto-storage/compare/v1.0.0...v2.0.0) (2020-07-20)
 
 
