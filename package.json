@@ -1,6 +1,6 @@
 {
   "name": "@webcrypto/storage",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": false,
   "description": "A set of tools to facilitate and give good defaults for use of the native Web Crypto API.",
   "publishConfig": {

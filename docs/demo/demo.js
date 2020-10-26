@@ -189,6 +189,15 @@ addEventListener('submit', event => {
      */
     var PBKDF2_ITERATIONS_DEFAULT = 50000;
     /**
+     * Returns the crypto object depending on browser support.
+     * IE11 has support for the Crypto API, but it is in a different global scope.
+     *
+     * @returns The Crypto object.
+     */
+    function getCryptoObject() {
+        return window.crypto || window.msCrypto; // for IE 11
+    }
+    /**
      * Creates a base Crypto Key from the original raw key, by default this base key
      * should just be used to protect the original key to be discovery,
      * and should not be used directly to any encrypt / decrypt algorithm.
@@ -206,7 +215,7 @@ addEventListener('submit', event => {
         if (keyUsages === void 0) { keyUsages = ['deriveKey']; }
         if (format === void 0) { format = 'raw'; }
         var isJwkKey = !isTypedArray(rawKey) && typeof rawKey === 'object';
-        return Promise.resolve(crypto.subtle.importKey(isJwkKey ? 'jwk' : format, typeof rawKey === 'string' ? encode(rawKey) : rawKey, algorithm, false, // the original value will not be extractable
+        return Promise.resolve(getCryptoObject().subtle.importKey(isJwkKey ? 'jwk' : format, typeof rawKey === 'string' ? encode(rawKey) : rawKey, algorithm, false, // the original value will not be extractable
         keyUsages));
     }
     function deriveCryptKey(cryptoBaseKey, deriveAlgorithmOrSalt, algorithmForOrIterations, keyUsages) {
@@ -226,7 +235,7 @@ addEventListener('submit', event => {
         var algorithmFor = typeof algorithmForOrIterations === 'number'
             ? { name: 'AES-GCM', length: 256 }
             : algorithmForOrIterations;
-        return Promise.resolve(crypto.subtle.deriveKey(deriveAlgorithm, cryptoBaseKey, algorithmFor, false, // the original key will not be extractable
+        return Promise.resolve(getCryptoObject().subtle.deriveKey(deriveAlgorithm, cryptoBaseKey, algorithmFor, false, // the original key will not be extractable
         keyUsages));
     }
     /**
@@ -248,7 +257,7 @@ addEventListener('submit', event => {
      */
     function encryptValue(data, cryptoKey, algorithm) {
         if (algorithm === void 0) { algorithm = { name: 'AES-GCM', iv: generateNonce() }; }
-        return Promise.resolve(crypto.subtle.encrypt(algorithm, cryptoKey, encode(data))).then(function (cryptoValue) { return [cryptoValue, algorithm.iv || null]; });
+        return Promise.resolve(getCryptoObject().subtle.encrypt(algorithm, cryptoKey, encode(data))).then(function (cryptoValue) { return [cryptoValue, algorithm.iv || null]; });
     }
     /**
      * Decrypt a value with the given Crypto Key and Algorithm
@@ -262,7 +271,7 @@ addEventListener('submit', event => {
         var algorithm = isTypedArray(nonceOrAlgorithm)
             ? { name: 'AES-GCM', iv: nonceOrAlgorithm }
             : nonceOrAlgorithm;
-        return Promise.resolve(crypto.subtle.decrypt(algorithm, cryptoKey, data));
+        return Promise.resolve(getCryptoObject().subtle.decrypt(algorithm, cryptoKey, data));
     }
     /**
      * Generates random value to be used as nonce with encryption algorithms.
@@ -296,7 +305,7 @@ addEventListener('submit', event => {
      */
     function generateRandomValues(byteSize) {
         if (byteSize === void 0) { byteSize = 8; }
-        return crypto.getRandomValues(new Uint8Array(byteSize));
+        return getCryptoObject().getRandomValues(new Uint8Array(byteSize));
     }
     /**
      * Encode a string value to a Typed Array as `Uint8Array`.
@@ -327,7 +336,7 @@ addEventListener('submit', event => {
      */
     function generateHash(data, algorithm) {
         if (algorithm === void 0) { algorithm = 'SHA-256'; }
-        return Promise.resolve(crypto.subtle.digest(algorithm, encode(data)));
+        return Promise.resolve(getCryptoObject().subtle.digest(algorithm, encode(data)));
     }
 
     const instanceOfAny = (object, constructors) => constructors.some((c) => object instanceof c);
