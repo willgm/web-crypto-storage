@@ -95,6 +95,10 @@ There is a [full feature example of use](https://github.com/willgm/web-crypto-st
 
 This project is heavily inspired on [Tim Taubert](https://twitter.com/ttaubert)'s talk at JSConf EU: [Keeping secrets with JavaScript](https://www.youtube.com/watch?v=yf4m9LdO1zI), if you want to better understand what happens under the hood, then I highly recommend for you to watch it out.
 
+### Contributing
+
+Please take a look at our [Contributing Guide](https://github.com/willgm/@webcrypto/storage/blob/master/CONTRIBUTING.md) to find out how to contribute to this project.
+
 ### Crypto Key FAQ
 
 #### What should I use as the crypto key?
