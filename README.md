@@ -97,7 +97,7 @@ This project is heavily inspired on [Tim Taubert](https://twitter.com/ttaubert)'
 
 ### Contributing
 
-Please take a look at our [Contributing Guide](https://github.com/willgm/@webcrypto/storage/blob/master/CONTRIBUTING.md) to find out how to contribute to this project.
+Please take a look at our [Contributing Guide](https://github.com/willgm/web-crypto-storage/blob/master/CONTRIBUTING.md) to find out how to contribute to this project.
 
 ### Crypto Key FAQ
 

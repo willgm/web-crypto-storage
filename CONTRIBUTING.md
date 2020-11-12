@@ -1,6 +1,6 @@
 # Contribution Guide
 
-We are happy you are looking forward to contribute to this project! As a first step, please take your time to read and understand our [Code of Conduct](https://github.com/willgm/@webcrypto/storage/blob/master/CODE_OF_CONDUCT.md), it is really important to abide to it, so that everyone can fell secure and welcome.
+We are happy you are looking forward to contribute to this project! As a first step, please take your time to read and understand our [Code of Conduct](https://github.com/willgm/web-crypto-storage/blob/master/CODE_OF_CONDUCT.md), it is really important to abide to it, so that everyone can fell secure and welcome.
 
 ## Environment
 
