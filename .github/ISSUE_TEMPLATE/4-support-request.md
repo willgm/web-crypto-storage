@@ -1,7 +1,7 @@
 ---
 name: '❓ Support request'
 about: Questions and requests for support
-label: question
+labels: question
 ---
 
 <!--🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅
