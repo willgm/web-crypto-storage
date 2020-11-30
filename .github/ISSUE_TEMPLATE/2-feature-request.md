@@ -1,7 +1,7 @@
 ---
 name: "\U0001F680 Feature request"
 about: Suggest a feature for this Library
-label: enhancement
+labels: enhancement
 ---
 
 <!--🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅

@@ -1,7 +1,7 @@
 ---
 name: '📚 Docs or demo app issue report'
 about: Report an issue in documentation or demo application
-label: documentation
+labels: documentation
 ---
 
 <!--🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅🔅
