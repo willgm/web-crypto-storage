@@ -129,7 +129,7 @@ addEventListener('submit', event => {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.webCryptoStorage = {}));
-}(this, (function (exports) { 'use strict';
+})(this, (function (exports) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -624,7 +624,7 @@ addEventListener('submit', event => {
          */
         CryptoStorage.prototype.get = function (key) {
             return __awaiter(this, void 0, void 0, function () {
-                var _a, _b, store, storeName, baseKey, salt, encryptIterations, hashKey, hashNonce, cryptoValue, _c, cryptoKey, nonce, value, error_1;
+                var _a, _b, store, storeName, baseKey, salt, encryptIterations, hashKey, hashNonce, cryptoValue, _c, cryptoKey, nonce, value;
                 return __generator(this, function (_d) {
                     switch (_d.label) {
                         case 0: return [4 /*yield*/, all([
@@ -653,7 +653,7 @@ addEventListener('submit', event => {
                             value = _d.sent();
                             return [2 /*return*/, decode(value)];
                         case 6:
-                            error_1 = _d.sent();
+                            _d.sent();
                             throw new Error(CryptoStorage.AuthenticityError);
                         case 7: return [2 /*return*/];
                     }
@@ -700,12 +700,12 @@ addEventListener('submit', event => {
          */
         CryptoStorage.prototype.clear = function () {
             return __awaiter(this, void 0, void 0, function () {
-                var _a, store, storeName, _, salt;
+                var _a, store, storeName, salt;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0: return [4 /*yield*/, this.internalConfig];
                         case 1:
-                            _a = _b.sent(), store = _a[0], storeName = _a[1], _ = _a[2], salt = _a[3];
+                            _a = _b.sent(), store = _a[0], storeName = _a[1], salt = _a[3];
                             return [4 /*yield*/, store.clear(storeName)];
                         case 2:
                             _b.sent();
@@ -876,7 +876,7 @@ addEventListener('submit', event => {
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 
 
 },{}]},{},[1]);
