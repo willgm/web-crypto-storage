@@ -113,7 +113,7 @@
   },
   "dependencies": {
     "@webcrypto/tools": "^2.0.0",
-    "idb": "^5.0.8"
+    "idb": "^6.1.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
