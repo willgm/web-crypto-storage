@@ -3,12 +3,6 @@ import { generateBaseCryptoKey } from '@webcrypto/tools';
 import { CryptoStorage } from '../src/web-crypto-storage';
 import { getErrorMessage, indexedDBSearch, setupSubjectList } from './tools';
 
-declare global {
-  interface IDBFactory {
-    databases: () => Promise<{ name: string; version: number }[]>;
-  }
-}
-
 const { registerSubject, clearSubjects } = setupSubjectList();
 
 describe('Web Crypto IndexedDB', () => {

@@ -112,7 +112,7 @@
     }
   },
   "dependencies": {
-    "@webcrypto/tools": "^1.2.1",
+    "@webcrypto/tools": "^2.0.0",
     "idb": "^5.0.8"
   },
   "devDependencies": {
@@ -159,6 +159,6 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^9.0.0",
     "typedoc": "^0.22.11",
-    "typescript": "^4.0.8"
+    "typescript": "^4.5.5"
   }
 }
