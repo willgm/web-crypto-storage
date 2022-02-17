@@ -6,14 +6,13 @@ import {
   generateBaseCryptoKey,
   generateHash,
   generateSalt,
-  TypedArray,
 } from '@webcrypto/tools';
 import { deleteDB, IDBPDatabase, openDB } from 'idb';
 
 /**
  * Default input data formats to be encrypted and stored.
  */
-export type InputData = string | TypedArray;
+export type InputData = string | BufferSource;
 
 /**
  * Configuration used to initialize the Crypto Storage.
@@ -34,7 +33,7 @@ export interface CryptoStorageConfig {
   /**
    * Custom salt used to encrypt the stored data.
    */
-  salt?: TypedArray;
+  salt?: BufferSource;
   /**
    * Custom iteration cycles to encrypt the stored data.
    */
@@ -44,7 +43,7 @@ export interface CryptoStorageConfig {
 /**
  * @internal
  */
-type InternalConfig = [IDBPDatabase<any>, string, CryptoKey, TypedArray, number | undefined];
+type InternalConfig = [IDBPDatabase<any>, string, CryptoKey, BufferSource, number | undefined];
 
 /**
  * Crypto Storage service used to save and load local encrypted data using IndexedDB.
@@ -81,14 +80,14 @@ export class CryptoStorage {
     baseKey: InputData | CryptoKey,
     dbName?: string,
     storeName?: string,
-    salt?: TypedArray,
+    salt?: BufferSource,
     encryptIterations?: number,
   );
   constructor(
     baseKeyOrConfig: InputData | CryptoKey | CryptoStorageConfig,
     dbName?: string,
     storeName?: string,
-    salt?: TypedArray,
+    salt?: BufferSource,
     encryptIterations?: number,
   ) {
     this.internalConfig = init(
@@ -243,8 +242,8 @@ const init = async ({
 const verifySalt = async (
   storePromise: IDBPDatabase | Promise<IDBPDatabase>,
   storeName: string,
-  salt?: TypedArray,
-): Promise<TypedArray> => {
+  salt?: BufferSource,
+): Promise<BufferSource> => {
   const [hash, store] = await all([generateHash('salt'), storePromise]);
   const existingSalt = await store.get(storeName, hash);
   if (existingSalt && (!salt || existingSalt === salt)) {
@@ -257,11 +256,11 @@ const verifySalt = async (
  * @internal
  */
 const persistSalt = async (
-  saltHash: TypedArray,
+  saltHash: BufferSource,
   store: IDBPDatabase,
   storeName: string,
-  currentSalt?: TypedArray,
-): Promise<TypedArray> => {
+  currentSalt?: BufferSource,
+): Promise<BufferSource> => {
   const salt = currentSalt ?? generateSalt();
   await store.put(storeName, salt, saltHash);
   return salt;
