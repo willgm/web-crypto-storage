@@ -1,3 +1,16 @@
+# [3.0.0](https://github.com/willgm/web-crypto-storage/compare/v2.0.3...v3.0.0) (2022-02-17)
+
+
+### Features
+
+* support for TypeScript 4.5 ([049a6d9](https://github.com/willgm/web-crypto-storage/commit/049a6d9bf76931c6b259cde656ce1b65e3209c44))
+* supporting idb v6 ([5ae5b23](https://github.com/willgm/web-crypto-storage/commit/5ae5b238a4968e3a7fc7ff28a2c2c65de5f8cb1c))
+
+
+### BREAKING CHANGES
+
+* Some type definitions on the public API needed to be changed due to TypeScript
+
 ## [2.0.3](https://github.com/willgm/web-crypto-storage/compare/v2.0.2...v2.0.3) (2022-02-16)
 
 

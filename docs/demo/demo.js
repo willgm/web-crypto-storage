@@ -215,8 +215,11 @@ addEventListener('submit', event => {
         if (keyUsages === void 0) { keyUsages = ['deriveKey']; }
         if (format === void 0) { format = 'raw'; }
         var isJwkKey = !isTypedArray(rawKey) && typeof rawKey === 'object';
-        return Promise.resolve(getCryptoObject().subtle.importKey(isJwkKey ? 'jwk' : format, typeof rawKey === 'string' ? encode(rawKey) : rawKey, algorithm, false, // the original value will not be extractable
-        keyUsages));
+        return Promise.resolve(isJwkKey
+            ? getCryptoObject().subtle.importKey('jwk', rawKey, algorithm, false, // the original value will not be extractable
+            keyUsages)
+            : getCryptoObject().subtle.importKey(format, typeof rawKey === 'string' ? encode(rawKey) : rawKey, algorithm, false, // the original value will not be extractable
+            keyUsages));
     }
     function deriveCryptKey(cryptoBaseKey, deriveAlgorithmOrSalt, algorithmForOrIterations, keyUsages) {
         if (algorithmForOrIterations === void 0) { algorithmForOrIterations = PBKDF2_ITERATIONS_DEFAULT; }
@@ -257,7 +260,10 @@ addEventListener('submit', event => {
      */
     function encryptValue(data, cryptoKey, algorithm) {
         if (algorithm === void 0) { algorithm = { name: 'AES-GCM', iv: generateNonce() }; }
-        return Promise.resolve(getCryptoObject().subtle.encrypt(algorithm, cryptoKey, encode(data))).then(function (cryptoValue) { return [cryptoValue, algorithm.iv || null]; });
+        return Promise.resolve(getCryptoObject().subtle.encrypt(algorithm, cryptoKey, encode(data))).then(function (cryptoValue) { return [
+            cryptoValue,
+            typeof algorithm === 'object' && 'iv' in algorithm ? algorithm.iv : null,
+        ]; });
     }
     /**
      * Decrypt a value with the given Crypto Key and Algorithm
@@ -588,10 +594,15 @@ addEventListener('submit', event => {
             let target = tx.store;
             if (useIndex)
                 target = target.index(args.shift());
-            const returnVal = await target[targetFuncName](...args);
-            if (isWrite)
-                await tx.done;
-            return returnVal;
+            // Must reject if op rejects.
+            // If it's a write operation, must reject if tx.done rejects.
+            // Must reject with op rejection first.
+            // Must resolve with op value.
+            // Must handle both promises (no unhandled rejections)
+            return (await Promise.all([
+                target[targetFuncName](...args),
+                isWrite && tx.done,
+            ]))[0];
         };
         cachedMethods.set(prop, method);
         return method;
@@ -607,7 +618,8 @@ addEventListener('submit', event => {
      */
     var CryptoStorage = /** @class */ (function () {
         function CryptoStorage(baseKeyOrConfig, dbName, storeName, salt, encryptIterations) {
-            this.internalConfig = init((baseKeyOrConfig === null || baseKeyOrConfig === void 0 ? void 0 : baseKeyOrConfig.hasOwnProperty('baseKey')) ? baseKeyOrConfig
+            this.internalConfig = init((baseKeyOrConfig === null || baseKeyOrConfig === void 0 ? void 0 : baseKeyOrConfig.hasOwnProperty('baseKey'))
+                ? baseKeyOrConfig
                 : {
                     baseKey: baseKeyOrConfig,
                     dbName: dbName,
