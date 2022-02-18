@@ -7,7 +7,7 @@ const INITIAL_NOTES = `You can insert any text you want here.
 Save it to storage and reload the page.`;
 
 function value(id, val) {
-  let input = document.getElementById(id);
+  let input = document.getElementById(id) || Array.from(document.getElementsByName(id)).find(e => e.checked);
   if (val !== undefined) {
     input.value = val;
   } else {
@@ -28,17 +28,60 @@ function updateStatus(val) {
   document.getElementById('status').innerHTML = '<b>Status:</b> ' + val;
 }
 
+async function webauthn(user, challenge) {
+  const encoder = new TextEncoder();
+  const publicKey = {
+    challenge: encoder.encode(challenge),
+    user: {
+      id: encoder.encode(user),
+      name: user,
+      displayName: user
+    },
+    pubKeyCredParams: [
+      {
+        type: "public-key",
+        alg: -7
+      }
+    ],
+    rp: {
+      name: document.title,
+      id: location.hostname
+    },
+  };
+
+  const credential = await navigator.credentials.create({ publicKey });
+
+  const decoder = new TextDecoder();
+  const decodedClientData = decoder.decode(
+    credential.response.clientDataJSON
+  );
+
+  // parse the string as an object
+  const clientDataObj = JSON.parse(decodedClientData);
+
+  return clientDataObj.challenge;
+}
+
 const Buttons = {
-  login() {
-    const user = value('user');
-    const pass = value('pass');
-    if (!user || !pass) {
-      return updateStatus('User and password are required');
-    }
-    // Here the user password is used as base crypto key
-    // and the user name is used as database name to fully scope the data:
-    cryptoStorage = new CryptoStorage(pass, user);
-    cryptoStorage.get('mynotes').then(notes => {
+  async login() {
+    try {
+      const user = value('user');
+      let pass = value('pass');
+      const logintype = value('logintype');
+
+      if (!user || (logintype !== 'webauthn' && !pass)) {
+        return updateStatus('User and password are required');
+      }
+
+      if(logintype !== 'password') {
+        pass = await webauthn(user, logintype === 'webauthn' ? user : pass)
+      }
+
+      // Here the user password is used as base crypto key
+      // and the user name is used as database name to fully scope the data:
+      cryptoStorage = new CryptoStorage(pass, user);
+      const notes = await cryptoStorage.get('mynotes');
+
       if (notes) {
         value('text', notes);
         updateStatus('Notes loaded for ' + user);
@@ -46,9 +89,12 @@ const Buttons = {
         Buttons.paste();
         updateStatus('Example notes pasted. No saved notes found for ' + user);
       }
+
       setclass('login', 'hide');
       setclass('notes', 'show');
-    }, updateStatus);
+    } catch (error) {
+      updateStatus(error);
+    }
   },
 
   load() {
@@ -92,6 +138,10 @@ const Buttons = {
 };
 
 addEventListener('click', event => {
+  if(event.target.type !== 'button' && event.target.type !== 'submit') {
+    return;
+  }
+
   event.preventDefault();
   switch (event.target.id) {
     case 'login':
