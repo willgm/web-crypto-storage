@@ -42,13 +42,15 @@
   </head>
   <body>
     <h1>Demo Crypto Store</h1>
+
     <p>
-      This example shows a simple storage that uses idb as the backend and the WebCrypto API for
-      integrity and authenticity checking, as well as password-based key derivation and AES
-      encryption using Web Crypto Tools.
+      This is a simple use example of <b>Web Crypto Storage</b>,
+      using different strategies to generate crypto keys from user input,
+      such as password, biometric or both.
     </p>
+
     <p class="note">
-      (Please use your DevTools' storage inspector to look at storage values.)
+      Please use your DevTools' storage inspector to look at storage values.
     </p>
 
     <form id="login">
@@ -61,6 +63,26 @@
         Password:
         <input id="pass" type="password" />
       </label>
+
+      <br><br>
+      Login Type:
+
+      <label>
+        <input type="radio" name="logintype" value="password" checked>
+        password
+      </label>
+
+      <label>
+        <input type="radio" name="logintype" value="webauthn">
+        webauthn
+      </label>
+
+      <label>
+        <input type="radio" name="logintype" value="both">
+        both
+      </label>
+
+      <br><br>
       <button id="login" type="submit">login</button>
     </form>
 
