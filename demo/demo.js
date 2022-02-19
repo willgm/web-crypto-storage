@@ -89,7 +89,7 @@ const Buttons = {
         updateStatus('Example notes pasted. No saved notes found for ' + user);
       }
 
-      setclass('login', 'hide');
+      setclass('loginform', 'hide');
       setclass('notes', 'show');
     } catch (error) {
       updateStatus(error);
@@ -129,7 +129,7 @@ const Buttons = {
     value('user', '');
     value('pass', '');
     cryptoStorage.close();
-    setclass('login', 'show');
+    setclass('loginform', 'show');
     setclass('notes', 'hide');
     updateStatus('Logged out.');
     focus('user');
@@ -151,9 +151,6 @@ addEventListener('click', event => {
       break;
     case 'save':
       Buttons.save();
-      break;
-    case 'paste':
-      Buttons.paste();
       break;
     case 'clear':
       Buttons.clear();
