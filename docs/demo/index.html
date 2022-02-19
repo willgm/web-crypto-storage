@@ -2,43 +2,155 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>
       Demo Crypto Store
     </title>
     <style>
+      html {
+        font-size: 1em;
+        font-family: arial,x-locale-body,sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
       h1 {
-        font-family: 'Ubuntu', sans-serif !important;
+        text-align: center;
+        font-size: calc(1.3em + 3vw);
         text-transform: uppercase;
       }
 
-      textarea {
-        display: block;
-        width: 600px;
-        height: 200px;
-        margin: 5px 0;
-        padding: 5px;
+      input[type=text], input[type=password], textarea {
+        padding: 5px 12px;
+        font-size: 1em;
+        line-height: 20px;
+        color: #24292e;
+        vertical-align: middle;
+        background-color: #ffffff;
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+        outline: none;
+        box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
       }
 
-      p {
-        width: 600px;
+      input:focus, input[type=button]:focus, button:focus, textarea:focus {
+        border-color: #0366d6;
+        outline: none;
+        box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+      }
+
+      input[type=button], button {
+        display: inline-block;
+        outline: 0;
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #babfc3;
+        padding: 7px 16px;
+        min-height: 36px;
+        min-width: 80px;
+        color: #202223;
+        background: #ffffff;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 1em;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+      }
+
+      textarea {
+        width: 94%;
+        height: 300px;
+      }
+
+      input[type=button]:hover, button:hover {
+        background: #f6f6f7;
+        outline: 1px solid transparent;
       }
 
       .hide {
-        display: none;
+        display: none !important;
       }
+
       .show {
+        display: block !important;
+      }
+
+      label.flex {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin: 10px 0;
+      }
+
+      #notes nav {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+      }
+
+      .logintype {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .logintype * {
+        margin: 0 4px;
+      }
+
+      #login {
         display: block;
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      #status {
+        margin: 20px 0;
+      }
+
+      .flex input {
+        margin-left: 10px;
+        width: 70%;
       }
 
       .note {
+        margin-top: 10px;
         font-weight: bold;
       }
+
+      @media (min-width: 1200px) {
+        html {
+          font-size: 1.5em;
+        }
+
+        h1 {
+          font-size: calc(1.8em + 3vw);
+          margin: 0.5em 0;
+        }
+
+        textarea {
+          display: block;
+          width: 100%;
+          height: 200px;
+          margin: 5px 0;
+          padding: 15px;
+        }
+
+        p, form, #notes, #status {
+          margin: 30px auto;
+          display: block;
+          width: 600px;
+        }
+
+        p {
+          width: 1000px;
+        }
+
+        #login {
+          width: 30%;
+        }
+      }
     </style>
-    <link
-      href="http://fonts.googleapis.com/css?family=Ubuntu:400"
-      rel="stylesheet"
-      type="text/css"
-    />
   </head>
   <body>
     <h1>Demo Crypto Store</h1>
@@ -50,50 +162,49 @@
     </p>
 
     <p class="note">
-      Please use your DevTools' storage inspector to look at storage values.
+      Take a look at your DevTools storage inspector and check out the encrypted values.
     </p>
 
-    <form id="login">
-      <label>
+    <form id="loginform">
+      <label class="flex">
         User:
         <input id="user" type="text" autofocus />
       </label>
 
-      <label>
+      <label class="flex">
         Password:
         <input id="pass" type="password" />
       </label>
 
-      <br><br>
-      Login Type:
+      <div class="logintype">
+        Login Type:
 
-      <label>
-        <input type="radio" name="logintype" value="password" checked>
-        password
-      </label>
+        <label>
+          <input type="radio" name="logintype" value="password" checked>
+          password
+        </label>
 
-      <label>
-        <input type="radio" name="logintype" value="webauthn">
-        webauthn
-      </label>
+        <label>
+          <input type="radio" name="logintype" value="webauthn">
+          webauthn
+        </label>
 
-      <label>
-        <input type="radio" name="logintype" value="both">
-        both
-      </label>
+        <label>
+          <input type="radio" name="logintype" value="both">
+          both
+        </label>
+      </div>
 
-      <br><br>
       <button id="login" type="submit">login</button>
     </form>
 
-    <br />
-
     <section id="notes" class="hide">
-      <input id="load" type="button" value="Load from Storage" />
-      <input id="save" type="button" value="Save to Storage" />
-      <input id="paste" type="button" value="Paste Example Notes" />
-      <input id="clear" type="button" value="Clear Storage" />
-      <input id="logout" type="button" value="Logout" />
+      <nav>
+        <input id="save" type="button" value="Save" />
+        <input id="load" type="button" value="Load" />
+        <input id="clear" type="button" value="Clear" />
+        <input id="logout" type="button" value="Logout" />
+      </nav>
 
       <textarea id="text"></textarea>
     </section>
