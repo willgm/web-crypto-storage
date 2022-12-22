@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/willgm/web-crypto-storage/compare/v3.0.0...v3.1.0) (2022-12-22)
+
+
+### Features
+
+* support for TypeScript 4.9 ([c329a34](https://github.com/willgm/web-crypto-storage/commit/c329a340931d8266c540bbb2536f15f698e3aff2))
+
 # [3.0.0](https://github.com/willgm/web-crypto-storage/compare/v2.0.3...v3.0.0) (2022-02-17)
 
 
